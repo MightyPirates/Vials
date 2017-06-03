@@ -1,5 +1,5 @@
 # Vials
-Ths mod adds Tinker's Construct sized fluid containers, called Vials. 
+This mod adds Tinker's Construct sized fluid containers, called Vials. 
 
 *This mod requires Java 8!*
 
