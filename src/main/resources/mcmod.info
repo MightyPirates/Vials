@@ -1,0 +1,17 @@
+[
+{
+  "modid": "vials",
+  "name": "Vials",
+  "description": "A mod adding Vials for Tinkers Construct sized fluid amounts",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["Lord Joda"],
+  "credits": "Textures by DaKaTotal",
+  "logoFile": "",
+  "screenshots": [],
+  "requiredMods": [ "Forge@[${fversion},)" ],
+  "dependencies": []
+}
+]

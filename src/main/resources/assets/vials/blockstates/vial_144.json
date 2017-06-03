@@ -1,0 +1,17 @@
+{
+    "forge_marker": 1,
+    "variants": {
+       "inventory": {
+      "model": "vials:vial_item",
+      "textures": {
+        "base": "vials:items/vial_144_base",
+        "fluid": "vials:items/vial_144_fluid",
+        "cover": "vials:items/vial_144_cover"
+      },
+      "transform": "forge:default-item",
+      "custom": {
+        "fluid": "water"
+      }
+    }
+    }
+}
