@@ -3,6 +3,7 @@ package li.cil.vials.common.api;
 import li.cil.vials.common.init.Items;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -16,9 +17,9 @@ public final class CreativeTab extends CreativeTabs {
 
     @SideOnly(Side.CLIENT)
     @Override
-    public Item getTabIconItem() {
+    public ItemStack getTabIconItem() {
         final Item item = Items.vial_144;
         assert item != null;
-        return item;
+        return new ItemStack(item);
     }
 }

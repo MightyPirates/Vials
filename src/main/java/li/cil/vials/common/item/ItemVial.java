@@ -58,7 +58,7 @@ public class ItemVial extends ItemFluidContainer {
             @Override
             public int fill(FluidStack resource, boolean doFill)
             {
-                if (container.stackSize != 1 || resource == null || resource.amount <capacity || getFluid() != null || !canFillFluidType(resource))
+                if (container.getCount() != 1 || resource == null || resource.amount <capacity || getFluid() != null || !canFillFluidType(resource))
                 {
                     return 0;
                 }
@@ -96,7 +96,7 @@ public class ItemVial extends ItemFluidContainer {
 
             @Override
             public FluidStack drain(int maxDrain, boolean doDrain) {
-                if (container.stackSize != 1 || maxDrain <= 0)
+                if (container.getCount() != 1 || maxDrain <= 0)
                 {
                     return null;
                 }
