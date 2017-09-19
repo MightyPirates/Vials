@@ -3,6 +3,7 @@ package li.cil.vials.common.init;
 
 import li.cil.vials.common.Constants;
 import li.cil.vials.common.ProxyCommon;
+import li.cil.vials.common.Settings;
 import li.cil.vials.common.integration.tconstruct.SmelteryRegistration;
 import li.cil.vials.common.integration.tconstruct.ProxyTinkersConstruct;
 import li.cil.vials.common.item.ItemVial;
@@ -27,33 +28,41 @@ public final class Items {
     public static Item vial_1296;
 
 
-
     // --------------------------------------------------------------------- //
 
     public static void register(final ProxyCommon proxy) {
-
-        vial_16 = proxy.registerItem(Constants.NAME_VIAL_16, new ItemVial(16));
-        vial_144 = proxy.registerItem(Constants.NAME_VIAL_144, new ItemVial(144));
-        vial_288 = proxy.registerItem(Constants.NAME_VIAL_288, new ItemVial(2 * 144));
-        vial_432 = proxy.registerItem(Constants.NAME_VIAL_432, new ItemVial(3 * 144));
-        vial_576 = proxy.registerItem(Constants.NAME_VIAL_576, new ItemVial(4 * 144));
-        vial_1296 = proxy.registerItem(Constants.NAME_VIAL_1296, new ItemVial(9 * 144));
+        int vial_small = Settings.vial_small;
+        if (vial_small > 0)
+            vial_16 = proxy.registerItem(Constants.NAME_VIAL_16, new ItemVial(vial_small));
+        int vial_normal = Settings.vial_standard;
+        if (vial_normal > 0)
+            vial_144 = proxy.registerItem(Constants.NAME_VIAL_144, new ItemVial(vial_normal));
+        int vial_large = Settings.vial_large;
+        if (vial_large > 0)
+            vial_288 = proxy.registerItem(Constants.NAME_VIAL_288, new ItemVial(vial_large));
+        int vial_huge = Settings.vial_huge;
+        if (vial_huge > 0)
+            vial_432 = proxy.registerItem(Constants.NAME_VIAL_432, new ItemVial(vial_huge));
+        int vial_giant = Settings.vial_giant;
+        if (vial_giant > 0)
+            vial_576 = proxy.registerItem(Constants.NAME_VIAL_576, new ItemVial(vial_giant));
+        int vial_extreme = Settings.vial_extreme;
+        if (vial_extreme > 0)
+            vial_1296 = proxy.registerItem(Constants.NAME_VIAL_1296, new ItemVial(vial_extreme));
 
 
     }
 
     public static void addRecipes() {
-        if(Loader.isModLoaded(ProxyTinkersConstruct.MOD_ID)){
+        if (Loader.isModLoaded(ProxyTinkersConstruct.MOD_ID)) {
             SmelteryRegistration.addReciepes();
-        }
-        else {
+        } else {
             ArrayList<String> oreDictIngots = new ArrayList<>();
             ArrayList<String> oreDictNuggets = new ArrayList<>();
             for (String s : OreDictionary.getOreNames()) {
-                if(s.contains("ingot")){
+                if (s.contains("ingot")) {
                     oreDictIngots.add(s);
-                }
-                else if(s.contains("nugget")){
+                } else if (s.contains("nugget")) {
                     oreDictNuggets.add(s);
                 }
             }
@@ -62,8 +71,8 @@ public final class Items {
                         " p ",
                         "pip",
                         " p ",
-                        'i',oreDictNugget,
-                        'p',"paneGlass"));
+                        'i', oreDictNugget,
+                        'p', "paneGlass"));
 
             }
             for (String oreDict : oreDictIngots) {
@@ -71,35 +80,35 @@ public final class Items {
                         " g ",
                         "gig",
                         " g ",
-                        'i',oreDict,
-                        'g',"blockGlass"));
+                        'i', oreDict,
+                        'g', "blockGlass"));
 
 
             }
-        GameRegistry.addRecipe(new ShapedOreRecipe(vial_288,
-                " g ",
-                "gig",
-                "ggg",
-                'i',vial_144,
-                'g',"blockGlass"));
-        GameRegistry.addRecipe(new ShapedOreRecipe(vial_432,
-                " g ",
-                "gig",
-                "ggg",
-                'i',vial_288,
-                'g',"blockGlass"));
-        GameRegistry.addRecipe(new ShapedOreRecipe(vial_576,
-                " g ",
-                "gig",
-                "ggg",
-                'i',vial_432,
-                'g',"blockGlass"));
-        GameRegistry.addRecipe(new ShapedOreRecipe(vial_1296,
-                "ggg",
-                "gig",
-                "ggg",
-                'i',vial_576,
-                'g',"blockGlass"));
+            GameRegistry.addRecipe(new ShapedOreRecipe(vial_288,
+                    " g ",
+                    "gig",
+                    "ggg",
+                    'i', vial_144,
+                    'g', "blockGlass"));
+            GameRegistry.addRecipe(new ShapedOreRecipe(vial_432,
+                    " g ",
+                    "gig",
+                    "ggg",
+                    'i', vial_288,
+                    'g', "blockGlass"));
+            GameRegistry.addRecipe(new ShapedOreRecipe(vial_576,
+                    " g ",
+                    "gig",
+                    "ggg",
+                    'i', vial_432,
+                    'g', "blockGlass"));
+            GameRegistry.addRecipe(new ShapedOreRecipe(vial_1296,
+                    "ggg",
+                    "gig",
+                    "ggg",
+                    'i', vial_576,
+                    'g', "blockGlass"));
 
         }
     }
