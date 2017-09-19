@@ -15,6 +15,7 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.registries.IForgeRegistry;
 
 import java.util.function.Supplier;
 
@@ -38,18 +39,18 @@ public final class ProxyClient extends ProxyCommon {
 
     // --------------------------------------------------------------------- //
 
-    @Override
-    public Block registerBlock(final String name, final Supplier<Block> constructor, final Class<? extends TileEntity> tileEntity) {
-        final Block block = super.registerBlock(name, constructor, tileEntity);
-        final Item item = Item.getItemFromBlock(block);
-        assert item != null;
-        setCustomItemModelResourceLocation(item);
-        return block;
-    }
+//    @Override
+//    public Block registerBlock(final String name, final Supplier<Block> constructor, final Class<? extends TileEntity> tileEntity) {
+//        final Block block = super.registerBlock(name, constructor, tileEntity);
+//        final Item item = Item.getItemFromBlock(block);
+//        assert item != null;
+//        setCustomItemModelResourceLocation(item);
+//        return block;
+//    }
 
     @Override
-    public Item registerItem(final String name, Item item) {
-        super.registerItem(name, item);
+    public Item registerItem(final IForgeRegistry<Item> registry, final String name, final Item item) {
+        super.registerItem(registry, name, item);
         setCustomItemModelResourceLocation(item);
         return item;
     }
@@ -59,7 +60,7 @@ public final class ProxyClient extends ProxyCommon {
     private static void setCustomItemModelResourceLocation(final Item item) {
         final ResourceLocation registryName = item.getRegistryName();
         assert registryName != null;
-       final ModelResourceLocation LOCATION = new ModelResourceLocation(registryName, "inventory");
+        final ModelResourceLocation LOCATION = new ModelResourceLocation(registryName, "inventory");
 
         ModelLoader.setCustomMeshDefinition(item, new ItemMeshDefinition() {
             @Override

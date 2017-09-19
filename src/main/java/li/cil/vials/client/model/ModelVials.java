@@ -37,7 +37,7 @@ import java.util.Map;
 /**
  * Created by lordjoda on 15.04.2017.
  */
-public final class ModelVials implements IModel, IModelCustomData, IRetexturableModel {
+public final class ModelVials implements IModel {
 
     public static final ModelVials MODEL = new ModelVials();
     private final Fluid fluid;
@@ -112,8 +112,10 @@ public final class ModelVials implements IModel, IModelCustomData, IRetexturable
     }
 
     @Override
-    public IBakedModel bake(IModelState state, VertexFormat format, Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter) {
-        ImmutableMap<ItemCameraTransforms.TransformType, TRSRTransformation> transformMap = IPerspectiveAwareModel.MapWrapper.getTransforms(state);
+    public IBakedModel bake(IModelState state, VertexFormat format,
+                            java.util.function.Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter)
+    {
+        ImmutableMap<ItemCameraTransforms.TransformType, TRSRTransformation> transformMap = PerspectiveMapWrapper.getTransforms(state);
 
 //        // if the fluid is a gas wi manipulate the initial state to be rotated 180? to turn it upside down
 //        if (flipGas && fluid != null && fluid.isGaseous())
@@ -121,7 +123,7 @@ public final class ModelVials implements IModel, IModelCustomData, IRetexturable
 //            state = new ModelStateComposition(state, TRSRTransformation.blockCenterToCorner(new TRSRTransformation(null, new Quat4f(0, 0, 1, 0), null, null)));
 //        }
 
-        TRSRTransformation transform = state.apply(Optional.<IModelPart>absent()).or(TRSRTransformation.identity());
+        TRSRTransformation transform = state.apply(java.util.Optional.empty()).orElse(TRSRTransformation.identity());
         TextureAtlasSprite fluidSprite = null;
         ImmutableList.Builder<BakedQuad> builder = ImmutableList.builder();
 
@@ -219,7 +221,7 @@ public final class ModelVials implements IModel, IModelCustomData, IRetexturable
     }
 
     // the dynamic bucket is based on the empty bucket
-    private static final class BakedVials implements IPerspectiveAwareModel {
+    private static final class BakedVials implements IBakedModel {
 
         private final ModelVials parent;
         // FIXME: guava cache?
@@ -247,7 +249,7 @@ public final class ModelVials implements IModel, IModelCustomData, IRetexturable
 
         @Override
         public Pair<? extends IBakedModel, Matrix4f> handlePerspective(ItemCameraTransforms.TransformType cameraTransformType) {
-            return IPerspectiveAwareModel.MapWrapper.handlePerspective(this, transforms, cameraTransformType);
+            return PerspectiveMapWrapper.handlePerspective(this, transforms, cameraTransformType);
         }
 
         @Override

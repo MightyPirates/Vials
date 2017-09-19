@@ -8,7 +8,7 @@ buildscript {
 		
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT'
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
 		
     }
 }
@@ -62,7 +62,7 @@ repositories {
 }
 
 dependencies {
-    deobfCompile "mezz.jei:jei_${config.minecraft.version}:${config.jei.version}"
+    deobfCompile "mezz.jei:jei_${config.minecraft.version}.1:${config.jei.version}"
 	deobfCompile "slimeknights.mantle:Mantle:${config.minecraft.version}-${config.mantle_version}"
 	deobfCompile "slimeknights:TConstruct:${config.minecraft.version}-${config.tic_build}"
 }
