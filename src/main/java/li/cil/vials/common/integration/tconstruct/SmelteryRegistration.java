@@ -1,5 +1,6 @@
 package li.cil.vials.common.integration.tconstruct;
 
+import li.cil.vials.common.Settings;
 import li.cil.vials.common.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -58,7 +59,7 @@ public class SmelteryRegistration {
 
             @Override
             public int getTime() {
-                return 5;
+                return Settings.fillingTime;
             }
 
             @Override
