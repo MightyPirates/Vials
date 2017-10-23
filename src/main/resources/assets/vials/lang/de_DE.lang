@@ -1,0 +1,8 @@
+itemGroup.vials=Vials
+vials.CAPACITY=Kapazität: %d mB
+item.vials.vial_16.name=Kleines Gläschen
+item.vials.vial_144.name=Normales Gläschen
+item.vials.vial_288.name=Großes Gläschen
+item.vials.vial_432.name=Riesiges Gläschen
+item.vials.vial_576.name=Gigantisches Gläschen
+item.vials.vial_1296.name=Extrem-Gläschen
