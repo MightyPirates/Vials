@@ -14,6 +14,7 @@ import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 /**
  * Manages setup, registration and lookup of items.
@@ -59,10 +60,13 @@ public final class Items {
         } else {
             ArrayList<String> oreDictIngots = new ArrayList<>();
             ArrayList<String> oreDictNuggets = new ArrayList<>();
+            Pattern patternIngot = Pattern.compile("^ingot[A-Z].*$");
+            Pattern patternNugget = Pattern.compile("^nugget[A-Z].*$");
+
             for (String s : OreDictionary.getOreNames()) {
-                if (s.contains("ingot")) {
+                if (patternIngot.matcher(s).matches()) {
                     oreDictIngots.add(s);
-                } else if (s.contains("nugget")) {
+                } else if (patternNugget.matcher(s).matches()) {
                     oreDictNuggets.add(s);
                 }
             }
