@@ -13,6 +13,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.IFluidHandler;
@@ -90,7 +91,7 @@ public class ItemVial extends ItemFluidContainer {
                 {
                     if (doDrain)
                     {
-                        setFluid(null);
+                       setContainerToEmpty();
                     }
                     return fluidStack;
                 }
