@@ -39,12 +39,12 @@ public class DrainHandler {
                         if (contents != null && contents.amount > 0) {
                             FluidActionResult fluidActionResult = FluidUtil.tryEmptyContainerAndStow(stack, fluidHandlerDrain, playerInventory, tankProperties[0].getCapacity(), player);
                             if(fluidActionResult.isSuccess()){
-                                stack.deserializeNBT(fluidActionResult.result.serializeNBT());
+                               player.setHeldItem(hand,fluidActionResult.getResult());
                             }
                         } else {
                             FluidActionResult fluidActionResult = FluidUtil.tryFillContainerAndStow(stack, fluidHandlerDrain, playerInventory, tankProperties[0].getCapacity(), player);
                             if(fluidActionResult.isSuccess()){
-                                stack.deserializeNBT(fluidActionResult.result.serializeNBT());
+                                player.setHeldItem(hand,fluidActionResult.getResult());
                             }
                         }
 
