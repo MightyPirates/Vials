@@ -44,8 +44,6 @@ public class ItemVial extends ItemFluidContainer {
     @Override
     public EnumActionResult onItemUseFirst(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand) {
         if (Loader.isModLoaded(ProxyTinkersConstruct.MOD_ID)) {
-            System.out.println("onItemUseFirst " + world.isRemote);
-
             return DrainHandler.onItemUseFirst(stack, player, world, pos, side, hitX, hitY, hitZ, hand);
         } else
             return super.onItemUseFirst(stack, player, world, pos, side, hitX, hitY, hitZ, hand);
