@@ -1,16 +1,20 @@
 package li.cil.vials.common.item;
 
 import li.cil.vials.common.API;
+import li.cil.vials.common.integration.tconstruct.DrainHandler;
+import li.cil.vials.common.integration.tconstruct.ProxyTinkersConstruct;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fluids.Fluid;
@@ -20,6 +24,7 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import net.minecraftforge.fluids.capability.ItemFluidContainer;
 import net.minecraftforge.fluids.capability.templates.FluidHandlerItemStack;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -36,13 +41,23 @@ public class ItemVial extends ItemFluidContainer {
     public ItemVial(int capacity) {
         super(capacity);
 
+
     }
 
     @SideOnly(Side.CLIENT)
     @Override
+    public EnumActionResult onItemUseFirst(EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand) {
+        if (Loader.isModLoaded(ProxyTinkersConstruct.MOD_ID)) {
+            return DrainHandler.onItemUseFirst(player.getHeldItem(hand), player, world, pos, side, hitX, hitY, hitZ, hand);
+        } else
+            return super.onItemUseFirst(player, world, pos, side, hitX, hitY, hitZ, hand);
+    }
+
+
+    @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
         super.addInformation(stack, worldIn, tooltip, flagIn);
-        tooltip.add(I18n.format(API.MOD_ID + "." + "CAPACITY",capacity) );
+        tooltip.add(I18n.format(API.MOD_ID + "." + "CAPACITY", capacity));
     }
 
     @Override
@@ -59,17 +74,14 @@ public class ItemVial extends ItemFluidContainer {
 
     @Override
     public ICapabilityProvider initCapabilities(ItemStack stack, NBTTagCompound nbt) {
-        return new FluidHandlerItemStack(stack,capacity){
+        return new FluidHandlerItemStack(stack, capacity) {
             @Override
-            public int fill(FluidStack resource, boolean doFill)
-            {
-                if (container.getCount() != 1 || resource == null || resource.amount <capacity || getFluid() != null || !canFillFluidType(resource))
-                {
+            public int fill(FluidStack resource, boolean doFill) {
+                if (container.getCount() != 1 || resource == null || resource.amount < capacity || getFluid() != null || !canFillFluidType(resource)) {
                     return 0;
                 }
 
-                if (doFill)
-                {
+                if (doFill) {
                     FluidStack filled = resource.copy();
                     setFluid(filled);
                 }
@@ -79,19 +91,15 @@ public class ItemVial extends ItemFluidContainer {
 
             @Nullable
             @Override
-            public FluidStack drain(FluidStack resource, boolean doDrain)
-            {
-                if ( resource == null || resource.amount < capacity)
-                {
+            public FluidStack drain(FluidStack resource, boolean doDrain) {
+                if (resource == null || resource.amount < capacity) {
                     return null;
                 }
 
                 FluidStack fluidStack = getFluid();
-                if (fluidStack != null && fluidStack.isFluidEqual(resource))
-                {
-                    if (doDrain)
-                    {
-                       setContainerToEmpty();
+                if (fluidStack != null && fluidStack.isFluidEqual(resource)) {
+                    if (doDrain) {
+                        setContainerToEmpty();
                     }
                     return fluidStack;
                 }
@@ -101,17 +109,15 @@ public class ItemVial extends ItemFluidContainer {
 
             @Override
             public FluidStack drain(int maxDrain, boolean doDrain) {
-                if (container.getCount() != 1 || maxDrain <= 0)
-                {
+                if (container.getCount() != 1 || maxDrain <= 0) {
                     return null;
                 }
 
                 FluidStack contained = getFluid();
-                if (contained == null || contained.amount <= 0 || !canDrainFluidType(contained))
-                {
+                if (contained == null || contained.amount <= 0 || !canDrainFluidType(contained)) {
                     return null;
                 }
-                if( maxDrain < capacity)
+                if (maxDrain < capacity)
                     return null;
 
                 final int drainAmount = Math.min(contained.amount, maxDrain);
@@ -119,15 +125,11 @@ public class ItemVial extends ItemFluidContainer {
                 FluidStack drained = contained.copy();
                 drained.amount = drainAmount;
 
-                if (doDrain)
-                {
+                if (doDrain) {
                     contained.amount -= drainAmount;
-                    if (contained.amount == 0)
-                    {
+                    if (contained.amount == 0) {
                         setContainerToEmpty();
-                    }
-                    else
-                    {
+                    } else {
                         setFluid(contained);
                     }
                 }
